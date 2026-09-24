@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inventory Management – Static Snapshot</title>
+  <style>
+    body { margin:0; font-family:system-ui,Arial,sans-serif; background:#f5f5f5; }
+    .app-bar { background:#1976d2; color:#fff; display:flex; align-items:center; padding:0.5rem 1rem; }
+    .app-bar img { height:40px; margin-right:1rem; }
+    .container { max-width:960px; margin:2rem auto; background:#fff; padding:1.5rem; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+    h1 { margin:0; font-size:1.6rem; }
+    h2 { margin-top:1.5rem; margin-bottom:0.5rem; font-size:1.3rem; }
+    table { width:100%; border-collapse:collapse; margin-top:0.5rem; }
+    th, td { border:1px solid #ddd; padding:0.5rem; text-align:left; }
+    th { background:#eee; }
+    .form-row { display:flex; gap:1rem; margin-bottom:0.5rem; }
+    .form-row label { flex:1; display:flex; flex-direction:column; font-size:0.9rem; }
+    .form-row input { padding:0.3rem; border:1px solid #ccc; border-radius:4px; }
+    .btn { background:#1976d2; color:#fff; border:none; padding:0.4rem 0.8rem; border-radius:4px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <header class="app-bar">
+    <img src="logo.png" alt="Company logo" />
+    <h1>Inventory Management</h1>
+  </header>
+  <main class="container">
+    <section>
+      <h2>Add Product (static example)</h2>
+      <form>
+        <div class="form-row">
+          <label>Name
+            <input type="text" placeholder="Sample Widget" disabled />
+          </label>
+          <label>SKU
+            <input type="text" placeholder="SW-001" disabled />
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Quantity
+            <input type="number" placeholder="10" disabled />
+          </label>
+          <label>Price
+            <input type="number" placeholder="19.99" disabled />
+          </label>
+        </div>
+        <button type="button" class="btn" disabled>Add Product</button>
+      </form>
+    </section>
+    <section>
+      <h2>Product List (static example)</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>SKU</th><th>Qty</th><th>Price</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Sample Widget</td><td>SW-001</td><td>10</td><td>19.99</td></tr>
+          <tr><td>Gadget Pro</td><td>GP-123</td><td>5</td><td>49.95</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

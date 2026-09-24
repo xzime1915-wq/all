@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory Management System</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      display: flex;
+      background: #f4f6f9;
+      color: #333;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 230px;
+      min-height: 100vh;
+      background: #1f2937;
+      color: white;
+      padding: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar li {
+      padding: 12px 15px;
+      margin: 5px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .sidebar li:hover,
+    .sidebar li.active {
+      background: #2563eb;
+    }
+
+    /* Main */
+    .main {
+      margin-left: 230px;
+      padding: 20px 30px;
+      width: calc(100% - 230px);
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .header input {
+      flex: 1;
+      max-width: 400px;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .user {
+      font-weight: bold;
+    }
+
+    /* Stats Cards */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .card {
+      padding: 20px;
+      color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .blue   { background: #2563eb; }
+    .green  { background: #16a34a; }
+    .orange { background: #f97316; }
+    .red    { background: #dc2626; }
+
+    /* Form */
+    .form-section {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-section h2 {
+      margin-bottom: 15px;
+    }
+
+    .form-section form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      align-items: center;
+    }
+
+    .form-section input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .form-section button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .form-section button:hover {
+      background: #1d4ed8;
+    }
+
+    /* Table */
+    .table-section {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      overflow-x: auto;
+    }
+
+    .table-section h2 {
+      margin-bottom: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px 15px;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #f3f4f6;
+    }
+
+    tr:hover {
+      background: #f9fafb;
+    }
+
+    /* Status badges */
+    .status {
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 13px;
+      color: white;
+      display: inline-block;
+    }
+
+    .in  { background: #16a34a; }
+    .low { background: #f97316; }
+    .out { background: #dc2626; }
+
+    /* Delete button */
+    .del {
+      background: #dc2626;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .del:hover {
+      background: #991b1b;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        position: relative;
+        width: 100%;
+        min-height: auto;
+      }
+      .main {
+        margin-left: 0;
+        width: 100%;
+      }
+      body {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>📦 Inventory</h2>
+    <ul>
+      <li class="active">Dashboard</li>
+      <li>Products</li>
+      <li>Categories</li>
+      <li>Suppliers</li>
+      <li>Orders</li>
+      <li>Reports</li>
+      <li>Settings</li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Header -->
+    <header class="header">
+      <h1>Dashboard</h1>
+      <input type="text" id="searchInput" placeholder="🔍 Search products..." />
+      <div class="user">👤 Admin</div>
+    </header>
+
+    <!-- Stats Cards -->
+    <section class="stats">
+      <div class="card blue">
+        <h3>Total Products</h3>
+        <p id="totalCount">0</p>
+      </div>
+      <div class="card green">
+        <h3>In Stock</h3>
+        <p id="inCount">0</p>
+      </div>
+      <div class="card orange">
+        <h3>Low Stock</h3>
+        <p id="lowCount">0</p>
+      </div>
+      <div class="card red">
+        <h3>Out of Stock</h3>
+        <p id="outCount">0</p>
+      </div>
+    </section>
+
+    <!-- Add Product Form -->
+    <section class="form-section">
+      <h2>Add New Product</h2>
+      <form id="productForm">
+        <input type="text" id="pname" placeholder="Product Name" required />
+        <input type="text" id="pcat" placeholder="Category" required />
+        <input type="number" id="pqty" placeholder="Quantity" required min="0" />
+        <input type="number" id="pprice" placeholder="Price ($)" required min="0" step="0.01" />
+        <button type="submit">Add Product</button>
+      </form>
+    </section>
+
+    <!-- Inventory Table -->
+    <section class="table-section">
+      <h2>Product Inventory</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="inventoryTable">
+          <!-- Rows inserted dynamically -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('productForm');
+    const table = document.getElementById('inventoryTable');
+    const searchInput = document.getElementById('searchInput');
+
+    // Load
