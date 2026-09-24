@@ -12,3 +12,4 @@ A clean, modern inventory‑management web app for **your tech company**.
   - Simple reports & CSV export
 
 Place your company logo (e.g., `tech(4).png`) into `frontend/src/assets/` and it will appear in the app header.
+balll er programmer
